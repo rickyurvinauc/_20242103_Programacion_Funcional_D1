@@ -80,6 +80,10 @@ function convertCodeBlocks(line) {
     return line.replace(/```([^`]+)```/g, '<pre><code>$1</code></pre>');
 }
 
+function convertQuotes(line) {
+    return line.replace(/\"(.*?)\"/g, '&quot;$1&quot;');
+}
+
 let markdown2 = `# Hello World
 **This is bold**
 *This is italic*
@@ -101,13 +105,12 @@ function convertMarkdownToHTML3(markdown) {
         .map(convertLinks)
         .map(convertImages)
         .map(convertCodeBlocks)
+        .map(convertQuotes)
         .join('<br>')
         .value();
 }
 
-function convertQuotes(line) {
-    return line.replace(/\"(.*?)\"/g, '&quot;$1&quot;');
-}
+
 let markdown3 = `# Hello World
 **This is "bold"**
 *This is "italic"**
@@ -116,7 +119,7 @@ let markdown3 = `# Hello World
 \`\`\`
 This is a "code block"
 \`\`\`
-"This is a quote"
+This is a quote. 
 `;
 
 console.log(convertMarkdownToHTML3(markdown3));
